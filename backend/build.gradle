@@ -1,0 +1,50 @@
+import org.springframework.boot.gradle.plugin.SpringBootPlugin
+
+plugins {
+	id "org.springframework.boot" version "${springBootVersion}"
+	id 'java'
+}
+
+group = 'io.spring.cloud.samples.animalrescue'
+version = '0.0.1-SNAPSHOT'
+
+sourceCompatibility = 11
+targetCompatibility = 11
+
+configurations {
+	developmentOnly
+	runtimeClasspath {
+		extendsFrom developmentOnly
+	}
+}
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	implementation enforcedPlatform(SpringBootPlugin.BOM_COORDINATES)
+	developmentOnly enforcedPlatform(SpringBootPlugin.BOM_COORDINATES)
+
+	developmentOnly "org.springframework.boot:spring-boot-devtools"
+
+	implementation 'org.springframework.boot:spring-boot-starter-actuator'
+	implementation 'org.springframework.boot:spring-boot-starter-data-jdbc'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+
+    runtimeOnly 'com.h2database:h2'
+
+	testImplementation('org.springframework.security:spring-security-test')
+	testImplementation('org.springframework.boot:spring-boot-starter-test') {
+		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+	}
+	testImplementation 'io.projectreactor:reactor-test'
+}
+
+test {
+	useJUnitPlatform()
+	testLogging {
+		exceptionFormat = "full"
+		events = ["passed", "skipped", "failed"]
+	}
+}

@@ -1,0 +1,14 @@
+.DS_Store
+.gradle
+
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+out/
+scripts/out/
+**/secrets/
+
+contracts/*
+partner-adoption-center/*

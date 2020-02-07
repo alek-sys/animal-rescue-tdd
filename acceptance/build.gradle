@@ -1,0 +1,36 @@
+plugins {
+    id 'java'
+}
+
+ext {
+    cucumberVersion = "6.9.0"
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testImplementation enforcedPlatform("org.springframework.boot:spring-boot-dependencies:${springBootVersion}")
+
+    // Selenium
+    testImplementation "org.seleniumhq.selenium:selenium-java"
+    testImplementation "org.seleniumhq.selenium:selenium-firefox-driver"
+
+    // Cucumber
+    testImplementation "io.cucumber:cucumber-java:${cucumberVersion}"
+    testImplementation "io.cucumber:cucumber-spring:${cucumberVersion}"
+    testImplementation "io.cucumber:cucumber-junit:${cucumberVersion}"
+
+    // Spring
+    testImplementation "org.springframework:spring-core"
+    testImplementation "org.springframework:spring-beans"
+    testImplementation "org.springframework:spring-context"
+    testImplementation "org.springframework:spring-test"
+
+    // Logging
+    testImplementation "org.springframework.boot:spring-boot-starter-logging"
+
+    // assertions
+    testImplementation "org.assertj:assertj-core"
+}
