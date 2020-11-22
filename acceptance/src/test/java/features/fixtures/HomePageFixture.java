@@ -24,7 +24,7 @@ public class HomePageFixture {
 	public AnimalCardFixture verifyAnimalIsDisplayed(String name) {
 		try {
 			WebElement header = this.webDriver.findElement(By.xpath("//div[text()='" + name + "']"));
-			WebElement animalCard = header.findElement(By.xpath("./.."));
+			WebElement animalCard = header.findElement(By.xpath("./../.."));
 			return new AnimalCardFixture(animalCard);
 		} catch (NoSuchElementException e) {
 			fail("An animal with name " + name + " is not found on the page");
@@ -42,5 +42,9 @@ public class HomePageFixture {
 		}
 
 		fail("An animal with name " + name + " is displayed on the page but it shouldn't be");
+	}
+
+	public void clickLogin() {
+		this.webDriver.findElement(By.xpath("//div[text()='Sign in to adopt']/..")).click();
 	}
 }

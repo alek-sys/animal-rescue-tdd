@@ -24,4 +24,19 @@ public class AnimalCardFixture {
 		assertThat(rescueDateEl.getText()).contains(rescueDate);
 		return this;
 	}
+
+	public AdoptionRequestWindowFixture andClickAddAdoptionRequest() {
+		WebElement addButton = this.element.findElement(By.xpath(".//button[text()='Adopt']"));
+		addButton.click();
+
+		WebElement root = this.element.findElement(By.xpath("/*"));
+		WebElement modalWindowElement = root.findElement(By.cssSelector(".modal"));
+
+		return new AdoptionRequestWindowFixture(modalWindowElement);
+	}
+
+	public void andHasNoOfPendingRequests(int expectedRequests) {
+		WebElement pendingRequests = this.element.findElement(By.cssSelector(".pending-number"));
+		assertThat(pendingRequests.getText()).isEqualTo(String.valueOf(expectedRequests));
+	}
 }

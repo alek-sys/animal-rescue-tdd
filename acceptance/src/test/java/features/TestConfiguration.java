@@ -1,6 +1,7 @@
 package features;
 
 import features.fixtures.HomePageFixture;
+import features.fixtures.LoginPageFixture;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
@@ -19,5 +20,10 @@ public class TestConfiguration {
 	HomePageFixture homePageFixture(WebDriver webDriver) {
 		String envUrl = System.getenv().getOrDefault("ENV_URL", "http://localhost:3000/rescue");
 		return new HomePageFixture(webDriver, envUrl);
+	}
+
+	@Bean
+	LoginPageFixture loginPageFixture(WebDriver webDriver) {
+		return new LoginPageFixture(webDriver);
 	}
 }

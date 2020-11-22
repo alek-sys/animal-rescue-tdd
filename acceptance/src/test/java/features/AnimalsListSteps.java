@@ -1,11 +1,10 @@
 package features;
 
 import features.fixtures.HomePageFixture;
+import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-
-import java.time.LocalDateTime;
 
 public class AnimalsListSteps {
 
