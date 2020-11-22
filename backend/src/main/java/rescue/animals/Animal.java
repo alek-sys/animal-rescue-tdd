@@ -1,7 +1,9 @@
 package rescue.animals;
 
 import org.springframework.lang.Nullable;
+import rescue.adoption.AdoptionRequest;
 
+import java.util.Collections;
 import java.util.Objects;
 
 public class Animal {
@@ -11,6 +13,7 @@ public class Animal {
 	private String avatarUrl;
 	private String description;
 	private String rescueDate;
+	private Iterable<AdoptionRequest> adoptionRequests;
 
 	public Animal() {
 		this.id = null;
@@ -18,6 +21,7 @@ public class Animal {
 		this.avatarUrl = "";
 		this.description = "";
 		this.rescueDate = "";
+		this.adoptionRequests = Collections.emptyList();
 	}
 
 	public Animal(Integer id, String name, String avatarUrl) {
@@ -26,6 +30,7 @@ public class Animal {
 		this.avatarUrl = avatarUrl;
 		this.description = "";
 		this.rescueDate = "";
+		this.adoptionRequests = Collections.emptyList();
 	}
 
 	public Integer getId() {
@@ -66,6 +71,14 @@ public class Animal {
 
 	public void setRescueDate(String rescueDate) {
 		this.rescueDate = rescueDate;
+	}
+
+	public void setAdoptionRequests(Iterable<AdoptionRequest> adoptionRequests) {
+		this.adoptionRequests = adoptionRequests;
+	}
+
+	public Iterable<AdoptionRequest> getAdoptionRequests() {
+		return adoptionRequests;
 	}
 
 	@Override

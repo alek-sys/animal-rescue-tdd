@@ -16,6 +16,7 @@ public class AnimalsListSteps {
 
 	@Given("^I'm an anonymous user$")
 	public void iMAnAnonymousUser() {
+		homePage.resetSession();
 	}
 
 	@When("^I navigate to the main page$")

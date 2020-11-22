@@ -1,5 +1,6 @@
 package rescue.adoption;
 
 public interface AdoptionRequests {
-	void adopt(Integer animalId, String adopter, String email, String notes);
+	Integer adopt(Integer animalId, String adopter, String email, String notes);
+	Iterable<AdoptionRequest> getAllFor(Integer animal);
 }

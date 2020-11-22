@@ -47,4 +47,8 @@ public class HomePageFixture {
 	public void clickLogin() {
 		this.webDriver.findElement(By.xpath("//div[text()='Sign in to adopt']/..")).click();
 	}
+
+	public void resetSession() {
+		this.webDriver.manage().deleteAllCookies();
+	}
 }
