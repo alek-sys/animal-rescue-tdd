@@ -7,7 +7,7 @@ import AdoptionRequestModal from "./adoption-request-modal";
 export default class AnimalCard extends React.Component {
 
     findExistingRequest() {
-        return this.props.animal.adoptionRequests
+        return (this.props.animal.adoptionRequests || [])
             .find(request => request.adopterName === this.props.username);
     }
 
@@ -30,7 +30,7 @@ export default class AnimalCard extends React.Component {
                 <Card.Content extra>
                     <div className="pending">
                         <Icon name='user'/>
-                        <span className="pending-number">{this.props.animal.adoptionRequests.length}</span>
+                        <span className="pending-number">{(this.props.animal.adoptionRequests || []).length}</span>
                         <span> </span>Pending Adopters
                     </div>
                     <div className='ui two buttons'>
@@ -53,7 +53,7 @@ AnimalCard.propTypes = {
         description: PropTypes.string.isRequired,
         adoptionRequests: PropTypes.arrayOf(PropTypes.shape({
             adopterName: PropTypes.string.isRequired,
-        })).isRequired,
+        })),
     }).isRequired,
     username: PropTypes.string.isRequired,
 };

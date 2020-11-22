@@ -5,28 +5,26 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.reactive.AutoConfigureWebTestClient;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.jdbc.core.JdbcOperations;
 import org.springframework.test.web.reactive.server.WebTestClient;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
-
-import java.util.Collections;
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import static org.hamcrest.Matchers.*;
-import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
 @AutoConfigureMockMvc
-class AnimalsControllerTest {
+class AnimalsControllerDetroitTest {
 
 	@Autowired
 	MockMvc mockMvc;
 
-	@MockBean
-	Animals animals;
+	@Autowired
+	JdbcOperations jdbcOperations;
 
 	@Test
 	void shouldReturnOkResponse() throws Exception {
@@ -36,22 +34,19 @@ class AnimalsControllerTest {
 
 	@Test
 	void shouldDisplayAnimals() throws Exception {
-		// London school of TDD - mockists
+		// Detroit / Chicago school of TDD - classicists
 
-		// Given
-		when(this.animals.getAll())
-			.thenReturn(Collections.singletonList(new Animal(1, "Paprica", "https://example.com/avatar.jpg")));
+		// Given - could be a POST request, if supported
+		this.jdbcOperations.update("insert into ANIMALS (id, name, avatar_url) values (999, 'Paprica', 'https://example.com/avatar.jpg')");
 
 		// When
 		ResultActions result = this.mockMvc.perform(get("/animals"));
 
 		// Then
-		result
-			.andExpect(jsonPath("$.length()").value(1))
-			.andExpect(jsonPath("$.[0].id").value(equalTo(1)))
-			.andExpect(jsonPath("$.[0].name").value(equalTo("Paprica")))
-			.andExpect(jsonPath("$.[0].avatarUrl").value(not(blankOrNullString())))
-			.andExpect(jsonPath("$.[0].description").exists())
-			.andExpect(jsonPath("$.[0].rescueDate").exists());
+		result.andExpect(jsonPath("$.[-1].id").value(equalTo(999)))
+			.andExpect(jsonPath("$.[-1].name").value(equalTo("Paprica")))
+			.andExpect(jsonPath("$.[-1].avatarUrl").value(not(blankOrNullString())))
+			.andExpect(jsonPath("$.[-1].description").exists())
+			.andExpect(jsonPath("$.[-1].rescueDate").exists());
 	}
 }

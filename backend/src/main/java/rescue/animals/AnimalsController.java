@@ -6,10 +6,16 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/animals")
-public class AnimalsController {
+class AnimalsController {
+
+	private final Animals animals;
+
+	public AnimalsController(Animals animals) {
+		this.animals = animals;
+	}
 
 	@GetMapping
-	void animals() {
-
+	Iterable<Animal> animals() {
+		return this.animals.getAll();
 	}
 }

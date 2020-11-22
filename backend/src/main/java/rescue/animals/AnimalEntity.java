@@ -1,32 +1,26 @@
 package rescue.animals;
 
+import org.springframework.data.annotation.Id;
+import org.springframework.data.relational.core.mapping.Table;
 import org.springframework.lang.Nullable;
 
 import java.util.Objects;
 
-public class Animal {
+@Table("ANIMALS")
+class AnimalEntity {
 
+	@Id
 	@Nullable
 	private Integer id;
+
 	private String name;
+
 	private String avatarUrl;
-	private String description;
-	private String rescueDate;
 
-	public Animal() {
+	public AnimalEntity(String name, String avatarUrl) {
 		this.id = null;
-		this.name = "";
-		this.avatarUrl = "";
-		this.description = "";
-		this.rescueDate = "";
-	}
-
-	public Animal(@Nullable Integer id, String name, String avatarUrl) {
-		this.id = id;
 		this.name = name;
 		this.avatarUrl = avatarUrl;
-		this.description = "";
-		this.rescueDate = "";
 	}
 
 	@Nullable
@@ -46,36 +40,21 @@ public class Animal {
 		this.name = name;
 	}
 
-	public String getAvatarUrl() {
-		return avatarUrl;
-	}
-
 	public void setAvatarUrl(String avatarUrl) {
 		this.avatarUrl = avatarUrl;
 	}
 
-	public String getDescription() {
-		return description;
-	}
-
-	public void setDescription(String description) {
-		this.description = description;
-	}
-
-	public String getRescueDate() {
-		return rescueDate;
-	}
-
-	public void setRescueDate(String rescueDate) {
-		this.rescueDate = rescueDate;
+	public String getAvatarUrl() {
+		return avatarUrl;
 	}
 
 	@Override
 	public boolean equals(@Nullable Object o) {
 		if (this == o) return true;
 		if (o == null || getClass() != o.getClass()) return false;
-		Animal that = (Animal) o;
-		return Objects.equals(id, that.id) && Objects.equals(name, that.name);
+		AnimalEntity that = (AnimalEntity) o;
+		return Objects.equals(id, that.id) &&
+			Objects.equals(name, that.name);
 	}
 
 	@Override
