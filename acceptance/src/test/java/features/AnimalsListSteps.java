@@ -26,4 +26,9 @@ public class AnimalsListSteps {
 	public void iSee(String name) {
 		this.homePage.verifyAnimalIsDisplayed(name);
 	}
+
+	@Then("I don't see {word}")
+	public void iDontSee(String name) {
+		this.homePage.verifyAnimalIsNotDisplayed(name);
+	}
 }

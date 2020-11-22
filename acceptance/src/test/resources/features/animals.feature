@@ -9,3 +9,8 @@ Feature: Animals list
     When I navigate to the main page
     Then I see Chocobo
     And I see Brody
+
+  Scenario: hiding animals already pending for adoption
+    Given I'm an anonymous user
+    When I navigate to the main page
+    Then I don't see Georgie

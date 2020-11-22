@@ -27,4 +27,15 @@ public class HomePageFixture {
 			fail("An animal with name " + name + " is not found on the page");
 		}
 	}
+
+	public void verifyAnimalIsNotDisplayed(String name) {
+		try {
+			this.webDriver.findElement(By.xpath("//div[text()='" + name + "']"));
+		} catch (NoSuchElementException e) {
+			// fine, no element is what we need
+			return;
+		}
+
+		fail("An animal with name " + name + " is displayed on the page but it shouldn't be");
+	}
 }

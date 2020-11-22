@@ -10,12 +10,13 @@ import java.util.Objects;
 class AnimalEntity {
 
 	@Id
-	@Nullable
 	private Integer id;
 
 	private String name;
 
 	private String avatarUrl;
+
+	private Boolean pendingAdoption = false;
 
 	public AnimalEntity(String name, String avatarUrl) {
 		this.id = null;
@@ -23,12 +24,11 @@ class AnimalEntity {
 		this.avatarUrl = avatarUrl;
 	}
 
-	@Nullable
 	public Integer getId() {
 		return id;
 	}
 
-	public void setId(@Nullable Integer id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
@@ -48,8 +48,16 @@ class AnimalEntity {
 		return avatarUrl;
 	}
 
+	public Boolean getPendingAdoption() {
+		return pendingAdoption;
+	}
+
+	public void setPendingAdoption(Boolean pendingAdoption) {
+		this.pendingAdoption = pendingAdoption;
+	}
+
 	@Override
-	public boolean equals(@Nullable Object o) {
+	public boolean equals(Object o) {
 		if (this == o) return true;
 		if (o == null || getClass() != o.getClass()) return false;
 		AnimalEntity that = (AnimalEntity) o;

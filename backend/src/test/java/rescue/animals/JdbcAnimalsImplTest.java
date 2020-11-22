@@ -8,7 +8,7 @@ import org.springframework.boot.test.autoconfigure.data.jdbc.DataJdbcTest;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DataJdbcTest
-class AnimalsTest {
+class JdbcAnimalsImplTest {
 
 	@Autowired
 	AnimalRepository animalRepository;
@@ -34,5 +34,18 @@ class AnimalsTest {
 			.first()
 			.hasFieldOrPropertyWithValue("name", expectedAnimalName)
 			.hasFieldOrPropertyWithValue("avatarUrl", expectedAvatarUrl);
+	}
+
+	@Test
+	void shouldFilterAnimalsPendingAdoption() {
+		String expectedName = "Animal pending adoption name";
+		AnimalEntity test = new AnimalEntity(expectedName, "");
+		test.setPendingAdoption(true);
+
+		this.animalRepository.save(test);
+
+		Iterable<Animal> animals = this.animals.getAll();
+
+		assertThat(animals).extracting(Animal::getName).doesNotContain(expectedName);
 	}
 }

@@ -6,7 +6,6 @@ import java.util.Objects;
 
 public class Animal {
 
-	@Nullable
 	private Integer id;
 	private String name;
 	private String avatarUrl;
@@ -21,7 +20,7 @@ public class Animal {
 		this.rescueDate = "";
 	}
 
-	public Animal(@Nullable Integer id, String name, String avatarUrl) {
+	public Animal(Integer id, String name, String avatarUrl) {
 		this.id = id;
 		this.name = name;
 		this.avatarUrl = avatarUrl;
@@ -29,12 +28,11 @@ public class Animal {
 		this.rescueDate = "";
 	}
 
-	@Nullable
 	public Integer getId() {
 		return id;
 	}
 
-	public void setId(@Nullable Integer id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
@@ -71,7 +69,7 @@ public class Animal {
 	}
 
 	@Override
-	public boolean equals(@Nullable Object o) {
+	public boolean equals(Object o) {
 		if (this == o) return true;
 		if (o == null || getClass() != o.getClass()) return false;
 		Animal that = (Animal) o;

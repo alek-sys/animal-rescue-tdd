@@ -17,7 +17,8 @@ class JdbcAnimalsImpl implements Animals {
 
 	@Override
 	public Iterable<Animal> getAll() {
-		List<Animal> animals = StreamSupport.stream(this.animalRepository.findAll().spliterator(), false)
+		List<Animal> animals = StreamSupport
+			.stream(this.animalRepository.findAllAvailableForAdoption().spliterator(), false)
 			.map(this::toAnimal)
 			.collect(Collectors.toList());
 
