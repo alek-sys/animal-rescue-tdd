@@ -31,6 +31,8 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-actuator'
 	implementation 'org.springframework.boot:spring-boot-starter-data-jdbc'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'org.springframework.boot:spring-boot-starter-validation'
+	implementation 'org.springframework.boot:spring-boot-starter-security'
 
 	implementation 'org.flywaydb:flyway-core'
 
@@ -41,6 +43,8 @@ dependencies {
 		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
 	}
 	testImplementation 'io.projectreactor:reactor-test'
+	testImplementation('org.seleniumhq.selenium:htmlunit-driver')
+	testImplementation('org.seleniumhq.selenium:selenium-java')
 }
 
 test {
