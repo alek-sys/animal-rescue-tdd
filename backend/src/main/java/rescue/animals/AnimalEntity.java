@@ -4,6 +4,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Table;
 import org.springframework.lang.Nullable;
 
+import java.time.LocalDate;
 import java.util.Objects;
 
 @Table("ANIMALS")
@@ -16,9 +17,13 @@ class AnimalEntity {
 
 	private String avatarUrl;
 
+	private String description = "";
+
 	private Boolean pendingAdoption = false;
 
-	public AnimalEntity(String name, String avatarUrl) {
+	private LocalDate rescueDate;
+
+	AnimalEntity(String name, String avatarUrl) {
 		this.id = null;
 		this.name = name;
 		this.avatarUrl = avatarUrl;
@@ -54,6 +59,22 @@ class AnimalEntity {
 
 	public void setPendingAdoption(Boolean pendingAdoption) {
 		this.pendingAdoption = pendingAdoption;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public void setRescueDate(LocalDate rescueDate) {
+		this.rescueDate = rescueDate;
+	}
+
+	public LocalDate getRescueDate() {
+		return rescueDate;
 	}
 
 	@Override

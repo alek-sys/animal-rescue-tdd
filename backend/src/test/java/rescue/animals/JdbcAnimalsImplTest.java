@@ -5,6 +5,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.data.jdbc.DataJdbcTest;
 
+import java.time.LocalDate;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DataJdbcTest
@@ -47,5 +49,42 @@ class JdbcAnimalsImplTest {
 		Iterable<Animal> animals = this.animals.getAll();
 
 		assertThat(animals).extracting(Animal::getName).doesNotContain(expectedName);
+	}
+
+	@Test
+	void shouldMapDescription() {
+		AnimalEntity test = new AnimalEntity("name", "");
+		test.setDescription("test description");
+
+		this.animalRepository.save(test);
+
+		Iterable<Animal> animals = this.animals.getAll();
+
+		assertThat(animals).extracting(Animal::getDescription).contains("test description");
+	}
+
+	@Test
+	void shouldMapRescueDate() {
+		AnimalEntity test = new AnimalEntity("name", "");
+		test.setRescueDate(LocalDate.of(2019, 12, 20));
+
+		this.animalRepository.save(test);
+
+		Iterable<Animal> animals = this.animals.getAll();
+
+		assertThat(animals).extracting(Animal::getRescueDate).contains("20 Dec 2019");
+	}
+
+	@Test
+	void shouldMapEmptyRescueDate() {
+		AnimalEntity test = new AnimalEntity("name", "");
+
+		this.animalRepository.save(test);
+		Iterable<Animal> animals = this.animals.getAll();
+
+		assertThat(animals).filteredOn(a -> "name".equals(a.getName()))
+			.first()
+			.extracting(Animal::getRescueDate)
+			.isEqualTo("N/A");
 	}
 }

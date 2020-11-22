@@ -14,3 +14,9 @@ Feature: Animals list
     Given I'm an anonymous user
     When I navigate to the main page
     Then I don't see Georgie
+
+  Scenario: displaying description and rescue date
+    Given I'm an anonymous user
+    When I navigate to the main page
+    Then I see Chocobo with description including "She is chubby, lazy, but always polite" and rescue date 25 Dec 2019
+    And I see Brody with description including "Brody has lots of energy and loves the outdoors" and rescue date 14 Jan 2020

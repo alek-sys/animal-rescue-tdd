@@ -3,6 +3,7 @@ package features.fixtures;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 
 import static org.assertj.core.api.Assertions.fail;
 
@@ -20,12 +21,16 @@ public class HomePageFixture {
 		this.webDriver.navigate().to(this.baseUrl);
 	}
 
-	public void verifyAnimalIsDisplayed(String name) {
+	public AnimalCardFixture verifyAnimalIsDisplayed(String name) {
 		try {
-			this.webDriver.findElement(By.xpath("//div[text()='" + name + "']"));
+			WebElement header = this.webDriver.findElement(By.xpath("//div[text()='" + name + "']"));
+			WebElement animalCard = header.findElement(By.xpath("./.."));
+			return new AnimalCardFixture(animalCard);
 		} catch (NoSuchElementException e) {
 			fail("An animal with name " + name + " is not found on the page");
 		}
+
+		return null;
 	}
 
 	public void verifyAnimalIsNotDisplayed(String name) {
