@@ -13,7 +13,8 @@ public class TestConfiguration {
 
 	@Bean
 	WebDriver webDriver() {
-		return new FirefoxDriver(new FirefoxOptions().setHeadless(true));
+		boolean isHeadless = !System.getenv().containsKey("SHOW_BROWSER");
+		return new FirefoxDriver(new FirefoxOptions().setHeadless(isHeadless));
 	}
 
 	@Bean

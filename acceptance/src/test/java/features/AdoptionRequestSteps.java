@@ -28,6 +28,7 @@ public class AdoptionRequestSteps {
 		// For this test, we assume user already exists.
 
 		this.homePageFixture.navigateTo();
+		this.homePageFixture.resetSession();
 	}
 
 	@And("I log in with username {string} and password {string}")
@@ -38,10 +39,17 @@ public class AdoptionRequestSteps {
 	}
 
 	@And("I click \"Add adoption request\" on {string} card")
-	public void iClickOnCard(String name) {
+	public void iClickAddRequest(String name) {
 		this.adoptionRequestWindow = this.homePageFixture
 			.verifyAnimalIsDisplayed(name)
 			.andClickAddAdoptionRequest();
+	}
+
+	@And("I click \"Edit adoption request\" on {string} card")
+	public void iClickEditRequest(String name) {
+		this.adoptionRequestWindow = this.homePageFixture
+			.verifyAnimalIsDisplayed(name)
+			.andClickEditAdoptionRequest();
 	}
 
 	@And("I specify my email {string} and add note {string}")
@@ -56,5 +64,15 @@ public class AdoptionRequestSteps {
 		this.homePageFixture
 			.verifyAnimalIsDisplayed(name)
 			.andHasNoOfPendingRequests(expectedRequests);
+
+		this.adoptionRequestWindow.verifySuccessfullyClosed();
+	}
+
+	@And("I have created adoption request for {string} with email {string} and note {string}")
+	public void iHaveCreatedAdoptionRequestFor(String name, String email, String note) {
+		this.iClickAddRequest(name);
+		this.adoptionRequestWindow.typeEmail(email);
+		this.adoptionRequestWindow.typeNote(note);
+		this.adoptionRequestWindow.clickAdd();
 	}
 }

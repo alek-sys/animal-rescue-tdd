@@ -26,6 +26,20 @@ class JdbcAdoptionRequestsImpl implements AdoptionRequests {
 	}
 
 	@Override
+	public void editRequest(Integer requestId, String adopterName, String email, String notes) throws RequestNotFoundException {
+		AdoptionRequestEntity existingRequest = this.adoptionRequestsRepository.findById(requestId)
+			.orElseThrow(RequestNotFoundException::new);
+
+		if (!adopterName.equals(existingRequest.getAdopterName())) {
+			throw new RequestNotFoundException();
+		}
+
+		existingRequest.setEmail(email);
+		existingRequest.setNotes(notes);
+		this.adoptionRequestsRepository.save(existingRequest);
+	}
+
+	@Override
 	public Iterable<AdoptionRequest> getAllFor(Integer animal) {
 		return StreamSupport.stream(this.adoptionRequestsRepository.findAllForAnimal(animal).spliterator(), false)
 			.map(this::mapRequest)

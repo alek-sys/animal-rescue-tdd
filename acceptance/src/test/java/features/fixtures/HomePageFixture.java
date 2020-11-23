@@ -50,5 +50,6 @@ public class HomePageFixture {
 
 	public void resetSession() {
 		this.webDriver.manage().deleteAllCookies();
+		this.webDriver.navigate().refresh();
 	}
 }

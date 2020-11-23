@@ -35,6 +35,16 @@ public class AnimalCardFixture {
 		return new AdoptionRequestWindowFixture(modalWindowElement);
 	}
 
+	public AdoptionRequestWindowFixture andClickEditAdoptionRequest() {
+		WebElement addButton = this.element.findElement(By.xpath(".//button[text()='Edit Adoption Request']"));
+		addButton.click();
+
+		WebElement root = this.element.findElement(By.xpath("/*"));
+		WebElement modalWindowElement = root.findElement(By.cssSelector(".modal"));
+
+		return new AdoptionRequestWindowFixture(modalWindowElement);
+	}
+
 	public void andHasNoOfPendingRequests(int expectedRequests) {
 		WebElement pendingRequests = this.element.findElement(By.cssSelector(".pending-number"));
 		assertThat(pendingRequests.getText()).isEqualTo(String.valueOf(expectedRequests));

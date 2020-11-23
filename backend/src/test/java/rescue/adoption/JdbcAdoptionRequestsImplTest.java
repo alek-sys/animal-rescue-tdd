@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.data.jdbc.DataJdbcTest;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
 @DataJdbcTest
 class JdbcAdoptionRequestsImplTest {
@@ -44,5 +45,32 @@ class JdbcAdoptionRequestsImplTest {
 		assertThat(requests).extracting(AdoptionRequest::getEmail)
 			.contains("email1@example.com", "email2@example.com");
 
+	}
+
+	@Test
+	void shouldUpdateRequestInDatabase() throws RequestNotFoundException {
+		Integer existingRequestId = this.adoptionRequestsRepository
+			.save(new AdoptionRequestEntity(1, "test-adopter", "old-email@example.com", "old note")).getId();
+
+		this.requests.editRequest(existingRequestId, "test-adopter", "new-email@example.com", "new note");
+
+		AdoptionRequestEntity entity = this.adoptionRequestsRepository.findById(existingRequestId).get();
+		assertThat(entity.getEmail()).isEqualTo("new-email@example.com");
+		assertThat(entity.getNotes()).isEqualTo("new note");
+	}
+
+	@Test
+	void shouldThrowExceptionWhenRequestNotFound() {
+		assertThatExceptionOfType(RequestNotFoundException.class)
+			.isThrownBy(() -> this.requests.editRequest(999, "test-adopter", "new-email@example.com", "new note"));
+	}
+
+	@Test
+	void shouldThrowExceptionWhenEditingRequestForDifferentAdopter() {
+		Integer existingRequestId = this.adoptionRequestsRepository
+			.save(new AdoptionRequestEntity(1, "test-adopter", "old-email@example.com", "old note")).getId();
+
+		assertThatExceptionOfType(RequestNotFoundException.class)
+			.isThrownBy(() -> this.requests.editRequest(existingRequestId, "new-adopter", "new-email@example.com", "new note"));
 	}
 }
