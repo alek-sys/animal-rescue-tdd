@@ -33,6 +33,11 @@ public class AdoptionRequestWindowFixture {
 			.click();
 	}
 
+	public void clickDelete() {
+		this.element.findElement(By.xpath(".//button[text()=' Delete Request']"))
+			.click();
+	}
+
 	public void verifySuccessfullyClosed() {
 		try {
 			assertThat(this.element.isDisplayed()).isFalse();

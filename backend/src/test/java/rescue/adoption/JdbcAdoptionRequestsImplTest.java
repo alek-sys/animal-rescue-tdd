@@ -5,6 +5,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.data.jdbc.DataJdbcTest;
 
+import java.util.Optional;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
@@ -60,7 +62,7 @@ class JdbcAdoptionRequestsImplTest {
 	}
 
 	@Test
-	void shouldThrowExceptionWhenRequestNotFound() {
+	void shouldThrowExceptionWhenRequestNotFoundOnUpdate() {
 		assertThatExceptionOfType(RequestNotFoundException.class)
 			.isThrownBy(() -> this.requests.editRequest(999, "test-adopter", "new-email@example.com", "new note"));
 	}
@@ -72,5 +74,31 @@ class JdbcAdoptionRequestsImplTest {
 
 		assertThatExceptionOfType(RequestNotFoundException.class)
 			.isThrownBy(() -> this.requests.editRequest(existingRequestId, "new-adopter", "new-email@example.com", "new note"));
+	}
+
+	@Test
+	void shouldDeleteRequestInDatabase() throws RequestNotFoundException {
+		Integer existingRequestId = this.adoptionRequestsRepository
+			.save(new AdoptionRequestEntity(1, "test-adopter", "old-email@example.com", "old note")).getId();
+
+		this.requests.deleteRequest(existingRequestId, "test-adopter");
+
+		Optional<AdoptionRequestEntity> entity = this.adoptionRequestsRepository.findById(existingRequestId);
+		assertThat(entity).isEmpty();
+	}
+
+	@Test
+	void shouldThrowExceptionWhenRequestNotFoundOnDelete() {
+		assertThatExceptionOfType(RequestNotFoundException.class)
+			.isThrownBy(() -> this.requests.deleteRequest(999, "test-adopter"));
+	}
+
+	@Test
+	void shouldThrowExceptionWhenDeletingRequestForDifferentAdopter() {
+		Integer existingRequestId = this.adoptionRequestsRepository
+			.save(new AdoptionRequestEntity(1, "test-adopter", "old-email@example.com", "old note")).getId();
+
+		assertThatExceptionOfType(RequestNotFoundException.class)
+			.isThrownBy(() -> this.requests.deleteRequest(existingRequestId, "new-adopter"));
 	}
 }

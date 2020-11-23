@@ -39,6 +39,14 @@ class AdoptionRequestController {
 		this.adoptionRequests.editRequest(requestId, principal.getName(), request.getEmail(), request.getNotes());
 	}
 
+	@DeleteMapping("/{requestId}")
+	void deleteRequest(
+		@PathVariable Integer requestId,
+		Principal principal
+	) throws RequestNotFoundException {
+		this.adoptionRequests.deleteRequest(requestId, principal.getName());
+	}
+
 	@ExceptionHandler(RequestNotFoundException.class)
 	ResponseEntity<?> notFound() {
 		return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Adoption request not found");

@@ -50,6 +50,6 @@ public class HomePageFixture {
 
 	public void resetSession() {
 		this.webDriver.manage().deleteAllCookies();
-		this.webDriver.navigate().refresh();
+		this.webDriver.navigate().refresh(); // after cookies deleted
 	}
 }

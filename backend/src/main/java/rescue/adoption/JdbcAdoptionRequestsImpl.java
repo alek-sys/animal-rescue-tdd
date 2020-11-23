@@ -40,6 +40,18 @@ class JdbcAdoptionRequestsImpl implements AdoptionRequests {
 	}
 
 	@Override
+	public void deleteRequest(Integer requestId, String adopterName) throws RequestNotFoundException {
+		AdoptionRequestEntity entity = this.adoptionRequestsRepository.findById(requestId)
+			.orElseThrow(RequestNotFoundException::new);
+
+		if (!adopterName.equals(entity.getAdopterName())) {
+			throw new RequestNotFoundException();
+		}
+
+		this.adoptionRequestsRepository.deleteById(requestId);
+	}
+
+	@Override
 	public Iterable<AdoptionRequest> getAllFor(Integer animal) {
 		return StreamSupport.stream(this.adoptionRequestsRepository.findAllForAnimal(animal).spliterator(), false)
 			.map(this::mapRequest)

@@ -14,3 +14,11 @@ Feature: adoption requests
     When I click "Edit adoption request" on "Brody" card
     And I specify my email "martin-new-email@example.com" and add note "When can I get him home?"
     Then I see 1 pending adoption request(s) for "Brody"
+
+  Scenario: deleting an adoption request
+    Given I'm signed up with username "joanne" and password "joanne1975"
+    And I log in with username "joanne" and password "joanne1975"
+    And I have created adoption request for "Sam" with email "joanne1975@example.com" and note "She is so sweet!"
+    When I click "Edit adoption request" on "Sam" card
+    And I click "Delete"
+    Then I see 0 pending adoption request(s) for "Sam"

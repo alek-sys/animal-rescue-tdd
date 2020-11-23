@@ -75,4 +75,9 @@ public class AdoptionRequestSteps {
 		this.adoptionRequestWindow.typeNote(note);
 		this.adoptionRequestWindow.clickAdd();
 	}
+
+	@And("I click \"Delete\"")
+	public void iClick() {
+		this.adoptionRequestWindow.clickDelete();
+	}
 }

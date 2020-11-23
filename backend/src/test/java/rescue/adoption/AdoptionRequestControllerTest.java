@@ -15,8 +15,7 @@ import rescue.security.SecurityConfiguration;
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.*;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.header;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -139,12 +138,39 @@ class AdoptionRequestControllerTest {
 		}
 	}
 
-	private ResultActions sendEditRequest() throws Exception {
-		return mockMvc.perform(
-			put("/animals/{id}/adoption-requests/{requestId}", TEST_ANIMAL_ID, TEST_REQUEST_ID)
-				.content(testRequestJson())
-				.header("Content-Type", "application/json")
-				.with(user(TEST_USER_NAME)));
+	@Nested
+	class DeleteAdoptionRequest {
+
+		@Test
+		void shouldAllowToDeleteAdoptionRequest() throws Exception {
+			sendDeleteRequest()
+				.andExpect(status().isOk());
+		}
+
+		@Test
+		void shouldPassRequestId() throws Exception {
+			sendDeleteRequest();
+
+			verify(adoptionRequests).deleteRequest(eq(TEST_REQUEST_ID), anyString());
+		}
+
+		@Test
+		void shouldPassAdopterName() throws Exception {
+			sendDeleteRequest();
+
+			verify(adoptionRequests).deleteRequest(any(), eq(TEST_USER_NAME));
+		}
+
+		@Test
+		void shouldReturnNotFoundIfRequestNotFound() throws Exception {
+			doThrow(RequestNotFoundException.class)
+				.when(adoptionRequests)
+				.deleteRequest(anyInt(), anyString());
+
+			sendDeleteRequest()
+				.andExpect(status().isNotFound());
+		}
+
 	}
 
 	private ResultActions sendAdoptionRequest() throws Exception {
@@ -154,6 +180,21 @@ class AdoptionRequestControllerTest {
 				.content(testRequestJson())
 				.header("Content-Type", "application/json"));
 	}
+
+	private ResultActions sendEditRequest() throws Exception {
+		return mockMvc.perform(
+			put("/animals/{id}/adoption-requests/{requestId}", TEST_ANIMAL_ID, TEST_REQUEST_ID)
+				.content(testRequestJson())
+				.header("Content-Type", "application/json")
+				.with(user(TEST_USER_NAME)));
+	}
+
+	private ResultActions sendDeleteRequest() throws Exception {
+		return mockMvc.perform(
+			delete("/animals/{id}/adoption-requests/{requestId}", TEST_ANIMAL_ID, TEST_REQUEST_ID)
+				.with(user(TEST_USER_NAME)));
+	}
+
 
 	private String testRequestJson() {
 		//language=JSON
