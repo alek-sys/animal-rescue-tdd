@@ -1,0 +1,20 @@
+plugins {
+	id "org.springframework.cloud.contract" version "${springCloudContractPluginVersion}"
+	id 'maven'
+	id 'groovy'
+}
+
+apply plugin: 'spring-cloud-contract'
+
+group = 'rescue'
+version = '0.0.1'
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	testImplementation "org.springframework.cloud:spring-cloud-contract-spec-java:${springCloudContractPluginVersion}"
+}
+
+test.enabled = false

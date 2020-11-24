@@ -35,6 +35,8 @@
     ]
   },
   "devDependencies": {
+    "@testing-library/jest-dom": "^5.11.5",
+    "spring-cloud-contract-stub-runner": "0.1.0",
     "wait-on": "^4.0.0"
   }
 }

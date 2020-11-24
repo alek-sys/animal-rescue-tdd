@@ -1,11 +1,16 @@
 import org.springframework.boot.gradle.plugin.SpringBootPlugin
+import org.springframework.cloud.contract.verifier.config.TestFramework
+import org.springframework.cloud.contract.verifier.config.TestMode
 
 plugins {
 	id "org.springframework.boot" version "${springBootVersion}"
+	id "org.springframework.cloud.contract" version "${springCloudContractPluginVersion}"
 	id 'java'
 }
 
-group = 'io.spring.cloud.samples.animalrescue'
+apply plugin: 'spring-cloud-contract'
+
+group = 'rescue'
 version = '0.0.1-SNAPSHOT'
 
 sourceCompatibility = 11
@@ -24,8 +29,9 @@ repositories {
 
 dependencies {
 	implementation enforcedPlatform(SpringBootPlugin.BOM_COORDINATES)
-	developmentOnly enforcedPlatform(SpringBootPlugin.BOM_COORDINATES)
+	implementation enforcedPlatform("org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}")
 
+	developmentOnly enforcedPlatform(SpringBootPlugin.BOM_COORDINATES)
 	developmentOnly "org.springframework.boot:spring-boot-devtools"
 
 	implementation 'org.springframework.boot:spring-boot-starter-actuator'
@@ -45,7 +51,25 @@ dependencies {
 	testImplementation 'io.projectreactor:reactor-test'
 	testImplementation('org.seleniumhq.selenium:htmlunit-driver')
 	testImplementation('org.seleniumhq.selenium:selenium-java')
+
+	testImplementation 'org.springframework.cloud:spring-cloud-starter-contract-verifier'
+	testImplementation 'io.rest-assured:spring-mock-mvc'
 }
+
+contracts {
+	testFramework = TestFramework.JUNIT5
+	testMode = TestMode.MOCKMVC
+	baseClassForTests = "rescue.BaseClass"
+	basePackageForTests = "rescue"
+	contractsPath = "contracts"
+
+	contractsMode = "LOCAL"
+	contractDependency {
+		stringNotation = "rescue:contracts"
+	}
+}
+
+copyContracts.dependsOn(":contracts:install")
 
 test {
 	useJUnitPlatform()

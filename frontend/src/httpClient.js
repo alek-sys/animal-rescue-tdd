@@ -1,10 +1,14 @@
 import axios from 'axios';
 
-const backendBaseUrl = process.env.REACT_APP_BACKEND_BASE_URI || '';
+let backendBaseUrl = process.env.REACT_APP_BACKEND_BASE_URI || '';
+
+export function setBackendBaseUrl(url) {
+    backendBaseUrl = url;
+}
 
 export async function getAnimals() {
     return axios
-        .get(`${backendBaseUrl}/animals`)
+        .get(`${backendBaseUrl}/animals`, { headers: { "Content-Type": "application/json" } })
         .then(res => res.data);
 }
 
