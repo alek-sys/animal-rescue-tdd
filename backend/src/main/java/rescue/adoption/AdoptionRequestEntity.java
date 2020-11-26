@@ -4,7 +4,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Table;
 import org.springframework.lang.Nullable;
 
-@Table("ADOPTION_REQUESTS")
+@Table("adoption_requests")
 class AdoptionRequestEntity {
 
 	@Id

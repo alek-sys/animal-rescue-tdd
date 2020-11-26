@@ -10,3 +10,5 @@ insert into ANIMALS (id, name, avatar_url) values
 (7, 'Mittens', 'https://cdn.pixabay.com/photo/2013/05/17/15/54/cat-111793_960_720.jpg'),
 (8, 'Sabrina', 'https://cdn.pixabay.com/photo/2016/11/29/01/10/adorable-1866475_960_720.jpg'),
 (9, 'Georgie', 'https://cdn.pixabay.com/photo/2017/03/14/19/06/bulldog-2144110_960_720.jpg');
+
+ALTER SEQUENCE animals_id_seq RESTART WITH 10;

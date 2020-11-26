@@ -1,5 +1,5 @@
-alter table ANIMALS add column (pending_adoption bit default 0);
+alter table ANIMALS add column pending_adoption boolean default false;
 
 update ANIMALS
-    set pending_adoption = 1
+    set pending_adoption = false
     where name = 'Georgie';

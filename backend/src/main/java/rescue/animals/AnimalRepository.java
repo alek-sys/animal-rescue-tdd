@@ -5,6 +5,6 @@ import org.springframework.data.repository.CrudRepository;
 
 interface AnimalRepository extends CrudRepository<AnimalEntity, Integer> {
 
-	@Query("select * from ANIMALS where pending_adoption=0")
+	@Query("select * from ANIMALS where pending_adoption=false")
 	Iterable<AnimalEntity> findAllAvailableForAdoption();
 }

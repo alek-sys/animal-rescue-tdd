@@ -36,7 +36,7 @@ dependencies {
 
 	implementation 'org.flywaydb:flyway-core'
 
-    runtimeOnly 'com.h2database:h2'
+	runtimeOnly 'org.postgresql:postgresql:42.2.18'
 
 	testImplementation('org.springframework.security:spring-security-test')
 	testImplementation('org.springframework.boot:spring-boot-starter-test') {
@@ -45,6 +45,8 @@ dependencies {
 	testImplementation 'io.projectreactor:reactor-test'
 	testImplementation('org.seleniumhq.selenium:htmlunit-driver')
 	testImplementation('org.seleniumhq.selenium:selenium-java')
+
+	testImplementation 'org.testcontainers:postgresql:1.15.0'
 }
 
 test {

@@ -2,12 +2,11 @@ package rescue.animals;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Table;
-import org.springframework.lang.Nullable;
 
 import java.time.LocalDate;
 import java.util.Objects;
 
-@Table("ANIMALS")
+@Table("animals")
 class AnimalEntity {
 
 	@Id

@@ -1,0 +1,4 @@
+spring:
+  datasource:
+    url: jdbc:tc:postgresql:13:///animal-rescue-db
+    driver-class-name: org.testcontainers.jdbc.ContainerDatabaseDriver

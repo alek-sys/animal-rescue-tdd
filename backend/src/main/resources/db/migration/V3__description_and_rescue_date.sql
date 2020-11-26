@@ -1,4 +1,4 @@
-alter table ANIMALS add column (description varchar default '', rescue_date date);
+alter table ANIMALS add column description varchar default '', add column rescue_date date;
 
 update ANIMALS
     set description = 'Brody has lots of energy and loves the outdoors.', rescue_date = '2020-01-14'
