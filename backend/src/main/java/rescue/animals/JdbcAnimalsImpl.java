@@ -1,6 +1,5 @@
 package rescue.animals;
 
-import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
@@ -26,6 +25,15 @@ class JdbcAnimalsImpl implements Animals {
 			.collect(Collectors.toList());
 
 		return animals;
+	}
+
+	@Override
+	public void markPendingAdoption(int animalId) {
+		AnimalEntity entity = this.animalRepository.findById(animalId)
+			.orElseThrow(() -> new IllegalArgumentException("No animal found"));
+
+		entity.setPendingAdoption(true);
+		this.animalRepository.save(entity);
 	}
 
 	private Animal toAnimal(AnimalEntity animalEntity) {

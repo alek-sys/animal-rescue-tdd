@@ -8,6 +8,7 @@ import org.springframework.boot.test.autoconfigure.data.jdbc.DataJdbcTest;
 import java.time.LocalDate;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 @DataJdbcTest
 class JdbcAnimalsImplTest {
@@ -86,5 +87,24 @@ class JdbcAnimalsImplTest {
 			.first()
 			.extracting(Animal::getRescueDate)
 			.isEqualTo("N/A");
+	}
+
+	@Test
+	void shouldChangeAdoptionStatus() {
+		AnimalEntity test = new AnimalEntity("name", "");
+		AnimalEntity entity = this.animalRepository.save(test);
+
+		this.animals.markPendingAdoption(entity.getId());
+
+		AnimalEntity updatedEntity = this.animalRepository.findById(entity.getId()).orElseThrow();
+		assertThat(updatedEntity.getPendingAdoption()).isTrue();
+	}
+
+	@Test
+	void shouldThrowExceptionWhenChangingAdoptionStatusForNonExistingAnimal() {
+		assertThatThrownBy(() -> this.animals.markPendingAdoption(999))
+			.isInstanceOf(IllegalArgumentException.class)
+			.extracting(Throwable::getMessage)
+			.isEqualTo("No animal found");
 	}
 }
