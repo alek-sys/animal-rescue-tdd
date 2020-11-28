@@ -16,6 +16,7 @@ dependencies {
     // Selenium
     testImplementation "org.seleniumhq.selenium:selenium-java"
     testImplementation "org.seleniumhq.selenium:selenium-firefox-driver"
+    testImplementation 'io.github.bonigarcia:webdrivermanager:4.2.2'
 
     // Cucumber
     testImplementation "io.cucumber:cucumber-java:${cucumberVersion}"
