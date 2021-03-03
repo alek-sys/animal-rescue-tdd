@@ -2,6 +2,7 @@ package features;
 
 import features.fixtures.HomePageFixture;
 import features.fixtures.LoginPageFixture;
+import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
@@ -13,6 +14,7 @@ public class TestConfiguration {
 
 	@Bean
 	WebDriver webDriver() {
+		WebDriverManager.firefoxdriver().setup();
 		boolean isHeadless = !System.getenv().containsKey("SHOW_BROWSER");
 		return new FirefoxDriver(new FirefoxOptions().setHeadless(isHeadless));
 	}
