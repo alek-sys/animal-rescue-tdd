@@ -6,7 +6,7 @@ jobs:
   backend-test:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
 
     - name: Setup Java JDK
       uses: actions/setup-java@v1.4.3
@@ -19,7 +19,7 @@ jobs:
   e2e-test:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - name: Setup Node
         uses: actions/setup-node@v2.1.5
         with:
@@ -42,7 +42,7 @@ jobs:
   lint:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
       - name: Setup Java JDK
         uses: actions/setup-java@v1.4.3
